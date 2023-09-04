@@ -8,4 +8,5 @@ void main()
  void welcome()
  {
     printf("--WELCOME TO MITHILA BANK--");
+    printf("hi");
  }
