@@ -1,5 +1,11 @@
 #include <stdio.h>
+void welcome();
+void main()
+ {
+    welcome();
 
-void main() {
-    
-}
+ }
+ void welcome()
+ {
+    printf("--WELCOME TO MITHILA BANK--");
+ }
