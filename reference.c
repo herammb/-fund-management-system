@@ -6,6 +6,7 @@ struct Account {
     int accountNumber;
     char name[100];
     float balance;
+    char password[100];
 };
 
 // Global variable to keep track of the last assigned account number
@@ -23,14 +24,73 @@ int generateAccountNumber() {
 // Function to create a new account
 void createAccount(struct Account accounts[], int *count) {
     struct Account newAccount;
+    char name[100];
+    char pw[100];
     newAccount.accountNumber = generateAccountNumber();
     printf("Enter name: ");
     scanf("%s", newAccount.name);
+    int haslower,hasupper,hasdigit,haspunct,minsize;
+    do
+    {
+        printf("Enter Password: ");
+        printf("enter password:\nthe password should contain atleast 1 \nuppercase\nlowercase\ndigit\npunctuation\natleast 8 characters\n");
+        scanf("%s",newAccount.password);
+        
+        int length = strlen(newAccount.password);
+        
+        for(int i=0;i <= length;i++){
+        if(isupper(newAccount.password)){
+            hasupper=1;
+        }else if(islower(newAccount.password)){
+        haslower=1;}
+        else if(isdigit(newAccount.password)){
+            hasdigit=1;
+        }else if(ispunct(newAccount.password)){
+        haspunct=1;
+        }else if(length>=8){
+        minsize=1;
+        }
+        }
+
+    }while( haslower &&hasupper&&hasdigit&&haspunct&&minsize == 0);
     printf("Enter initial balance: ");
     scanf("%f", &newAccount.balance);
     accounts[*count] = newAccount;
     (*count)++;
-    printf("Account created successfully! Your account number is: %d\n", newAccount.accountNumber);
+    do
+    {
+        printf("Enter admin username");
+    
+    scanf("%s",name);
+    printf("Enter admin password");
+    scanf("%s",pw);
+    
+    if(strcmp(adminUsername,name) == 0 && strcmp(adminPassword,pw) == 0)
+    {
+            printf("Account created successfully! Your account number is: %d\n", newAccount.accountNumber);
+    }
+    else
+    {
+        printf("Wrong Credentials");
+    }
+    } while (strcmp(adminUsername,name) == 0 && strcmp(adminPassword,pw) == 0);
+    
+    printf("Enter admin username");
+    char name[100];
+    char pw[100];
+    scanf("%s",name);
+    printf("Enter admin password");
+    scanf("%s",pw);
+    
+    if(strcmp(adminUsername,name) == 0 && strcmp(adminPassword,pw) == 0)
+    {
+            printf("Account created successfully! Your account number is: %d\n", newAccount.accountNumber);
+    }
+    else
+    {
+        printf("Wrong Credentials");
+    }
+    
     saveAccountsToFile(accounts, *count); // Save account data to file
 }
 
