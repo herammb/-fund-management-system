@@ -33,6 +33,7 @@ int main()
     welcome();
     generateAccountNumber();
     createAccount(accounts, &count);
+    saveAccountsToFile(accounts,&count);
 
     return 0;
 }
@@ -40,6 +41,7 @@ int main()
 void welcome()
 {
     printf("--WELCOME TO MITHILA BANK--\n");
+
 }
 
 int generateAccountNumber()
