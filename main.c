@@ -4,11 +4,11 @@
 #include <ctype.h>
 
 //account details
-struct account
+struct Account
 {
    int accountNumber;
    float balance;
-   char name[50];
+   char name[100];
    char password[100];
 };
 
@@ -51,72 +51,63 @@ int generateAccountNumber()
 // Function to create a new account
 void createAccount(struct Account accounts[], int *count) {
     struct Account newAccount;
-    char name[100];
-    char pw[100];
     newAccount.accountNumber = generateAccountNumber();
+    
     printf("Enter name: ");
     scanf("%s", newAccount.name);
-    int haslower,hasupper,hasdigit,haspunct,minsize;
-    do
-    {
-        printf("Enter Password: ");
-        printf("enter password:\nthe password should contain atleast 1 \nuppercase\nlowercase\ndigit\npunctuation\natleast 8 characters\n");
-        scanf("%s",newAccount.password);
-        
-        int length = strlen(newAccount.password);
-        
-        for(int i=0;i <= length;i++){
-        if(isupper(newAccount.password)){
-            hasupper=1;
-        }else if(islower(newAccount.password)){
-        haslower=1;}
-        else if(isdigit(newAccount.password)){
-            hasdigit=1;
-        }else if(ispunct(newAccount.password)){
-        haspunct=1;
-        }else if(length>=8){
-        minsize=1;
-        }
+
+    // Password requirements
+    int hasLower = 0, hasUpper = 0, hasDigit = 0, hasPunct = 0, hasMinSize = 0;
+    int length;
+
+    do {
+        printf("Enter password: ");
+        scanf("%s", newAccount.password);
+
+        length = strlen(newAccount.password);
+
+        for (int i = 0; i < length; i++) {
+            if (isupper(newAccount.password[i])) {
+                hasUpper = 1;
+            } else if (islower(newAccount.password[i])) {
+                hasLower = 1;
+            } else if (isdigit(newAccount.password[i])) {
+                hasDigit = 1;
+            } else if (ispunct(newAccount.password[i])) {
+                hasPunct = 1;
+            }
         }
 
-    }while( haslower &&hasupper&&hasdigit&&haspunct&&minsize == 0);
+        if (length >= 8 && hasLower && hasUpper && hasDigit && hasPunct) {
+            hasMinSize = 1;
+        } else {
+            printf("Password requirements not met. Please try again.\n");
+            hasLower = hasUpper = hasDigit = hasPunct = hasMinSize = 0;
+        }
+    } while (!hasMinSize);
+
     printf("Enter initial balance: ");
     scanf("%f", &newAccount.balance);
     accounts[*count] = newAccount;
     (*count)++;
-    do
-    {
-        printf("Enter admin username");
-    
-    scanf("%s",name);
-    printf("Enter admin password");
-    scanf("%s",pw);
-    
-    if(strcmp(adminUsername,name) == 0 && strcmp(adminPassword,pw) == 0)
-    {
-            printf("Account created successfully! Your account number is: %d\n", newAccount.accountNumber);
-    }
-    else
-    {
-        printf("Wrong Credentials");
-    }
-    } while (strcmp(adminUsername,name) == 0 && strcmp(adminPassword,pw) == 0);
-    
-    printf("Enter admin username");
-    char name[100];
+
+    char nm[100];
     char pw[100];
-    scanf("%s",name);
-    printf("Enter admin password");
-    scanf("%s",pw);
-    
-    if(strcmp(adminUsername,name) == 0 && strcmp(adminPassword,pw) == 0)
-    {
+    int isAdmin = 0;
+
+    do {
+        printf("Enter admin username: ");
+        scanf("%s", nm);
+        printf("Enter admin password: ");
+        scanf("%s", pw);
+
+        if (strcmp(adminUsername, nm) == 0 && strcmp(adminPassword, pw) == 0) {
+            isAdmin = 1;
             printf("Account created successfully! Your account number is: %d\n", newAccount.accountNumber);
-    }
-    else
-    {
-        printf("Wrong Credentials");
-    }
-    
+        } else {
+            printf("Wrong admin credentials. Please try again.\n");
+        }
+    } while (!isAdmin);
+
     saveAccountsToFile(accounts, *count); // Save account data to file
 }
