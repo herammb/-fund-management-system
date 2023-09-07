@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 
+
 //account details
 struct Account
 {
@@ -12,41 +13,42 @@ struct Account
    char password[100];
 };
 
+
+
 //admin credentials
 const char adminUsername[]= "admin";
 const char adminPassword[] = "nocluewhatwedoing123";
 
+
 //account number origin
 int trackNumber = 1000;
 
-//all prototypes mentioned here
 
+//all prototypes mentioned here
 int generateAccountNumber();
 void welcome();
-int account_data();
 void createAccount(struct Account accounts[], int *count);
+void saveAccountsToFile(struct Account accounts[],int count );
+
 
 void main()
  {
+    int count = 0;
     welcome();
-    account_data();
-
  }
+
+
  void welcome()
  {
     printf("--WELCOME TO MITHILA BANK--");
  }
- int account_data()
- {
-    FILE *file = fopen("accountdata.txt","a");
-    fprintf(file,"hey this is dev");
-    fclose(file);
- }
+
 
 int generateAccountNumber()
 {
    return ++trackNumber;
 }
+
 
 // Function to create a new account
 void createAccount(struct Account accounts[], int *count) {
@@ -64,6 +66,7 @@ void createAccount(struct Account accounts[], int *count) {
         printf("Enter password: ");
         scanf("%s", newAccount.password);
 
+//to check function criteria
         length = strlen(newAccount.password);
 
         for (int i = 0; i < length; i++) {
@@ -91,6 +94,7 @@ void createAccount(struct Account accounts[], int *count) {
     accounts[*count] = newAccount;
     (*count)++;
 
+//admin authentication
     char nm[100];
     char pw[100];
     int isAdmin = 0;
@@ -110,4 +114,20 @@ void createAccount(struct Account accounts[], int *count) {
     } while (!isAdmin);
 
     saveAccountsToFile(accounts, *count); // Save account data to file
+}
+
+// Function to save account data to a text file
+void saveAccountsToFile(struct Account accounts[], int count) {
+    FILE *file = fopen("accounts.txt", "w");
+    if (file == NULL) {
+        printf("Error opening file for writing.\n");
+        return;
+    }
+
+    for (int i = 0; i < count; i++) {
+        fprintf(file, "%d %s %.2f\n", accounts[i].accountNumber, accounts[i].name, accounts[i].balance);
+    }
+
+    fclose(file);
+    printf("Account data saved to file.\n");
 }
