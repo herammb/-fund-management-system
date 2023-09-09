@@ -33,7 +33,7 @@ int main()
     welcome();
     generateAccountNumber();
     createAccount(accounts, &count);
-    saveAccountsToFile(accounts,&count);
+    saveAccountsToFile(accounts, count);
 
     return 0;
 }
