@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#include <conio.h>
 
 
 struct user {
@@ -15,6 +16,7 @@ int main(){
 	int opt,choice;
 	int amount;
 	char cont = 'y';
+	login:
 	printf("\nWELCOME TO MITHILA BANK!");
 	printf("\n\n1.Register Account");
 	printf("\n2.Login Account");
@@ -37,7 +39,7 @@ int main(){
 		}
 	}
 	else if(opt == 2){
-		login:
+		retry:
 		printf("\nLogging In...\n");
 		printf("\nAccount Number: ");
 		int account;
@@ -46,6 +48,7 @@ int main(){
 		scanf("%s",password);
 		fp = fopen(strcat(account,".csv"),"r");
 		if(fp == NULL) printf("Account number not registered");
+
 		else {
 			fread(&user,sizeof(struct user),1,fp);
 			fclose(fp);
@@ -140,6 +143,7 @@ int main(){
 			}
 			else {
 				printf("\nInvalid password");
+				goto retry;
 			}
 		}
         printf("\n THANK YOU FOR BANKING WITH US!\n");
