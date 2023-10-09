@@ -31,18 +31,18 @@ int main(){
 		   int i = 0;
     char ch;
 		   while (1) {
-        ch = getch(); // Read a character without echoing to the screen
+        ch = getch();
 
-        if (ch == 13) { // Enter key pressed
-            user.password[i] = '\0'; // Null-terminate the password string
+        if (ch == 13) { 
+            user.password[i] = '\0'; 
             break;
-        } else if (ch == 8 && i > 0) { // Backspace key pressed
+        } else if (ch == 8 && i > 0) {
             i--;
-            printf("\b \b"); // Erase the character from the screen
+            printf("\b \b"); 
         } else {
             user.password[i] = ch;
             i++;
-            printf("*"); // Print an asterisk (*) to indicate a character was typed
+            printf("*"); 
         }
     }
 		user.balance=0;
@@ -65,18 +65,18 @@ int main(){
     int i = 0;
     char ch;
 		while (1) {
-        ch = getch(); // Read a character without echoing to the screen
+        ch = getch();
 
-        if (ch == 13) { // Enter key pressed
-            user_password[i] = '\0'; // Null-terminate the password string
+        if (ch == 13) { 
+            user_password[i] = '\0'; 
             break;
-        } else if (ch == 8 && i > 0) { // Backspace key pressed
+        } else if (ch == 8 && i > 0) { 
             i--;
-            printf("\b \b"); // Erase the character from the screen
+            printf("\b \b"); 
         } else {
             user_password[i] = ch;
             i++;
-            printf("*"); // Print an asterisk (*) to indicate a character was typed
+            printf("*"); 
         }
     }
 		fp = fopen(strcat(account,".csv"),"r");
