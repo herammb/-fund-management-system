@@ -30,7 +30,7 @@ int main(){
 		printf("Enter new password:");
 		scanf("%s",user.password);
 		user.balance=0;
-		stpcpy(filename,user.ac);
+		strcpy(filename,user.ac);
 		fp=fopen(strcat(filename,".csv"),"w");
 		fwrite(&user,sizeof(user),1,fp);
 		if(fwrite != 0){
@@ -42,8 +42,8 @@ int main(){
 		retry:
 		printf("\nLogging In...\n");
 		printf("\nAccount Number: ");
-		int account;
-		scanf("%s",account);
+		char account[15];
+		scanf("%s",&account);
 		printf("Password: ");
 		scanf("%s",password);
 		fp = fopen(strcat(account,".csv"),"r");
