@@ -28,7 +28,23 @@ int main(){
 		printf("\nEnter Account number:");
 		scanf("%s",user.ac);
 		printf("Enter new password:");
-		scanf("%s",user.password);
+		   int i = 0;
+    char ch;
+		   while (1) {
+        ch = getch(); // Read a character without echoing to the screen
+
+        if (ch == 13) { // Enter key pressed
+            user.password[i] = '\0'; // Null-terminate the password string
+            break;
+        } else if (ch == 8 && i > 0) { // Backspace key pressed
+            i--;
+            printf("\b \b"); // Erase the character from the screen
+        } else {
+            user.password[i] = ch;
+            i++;
+            printf("*"); // Print an asterisk (*) to indicate a character was typed
+        }
+    }
 		user.balance=0;
 		strcpy(filename,user.ac);
 		fp=fopen(strcat(filename,".csv"),"w");
@@ -45,14 +61,31 @@ int main(){
 		char account[15];
 		scanf("%s",&account);
 		printf("Password: ");
-		scanf("%s",password);
+		char user_password[50];
+    int i = 0;
+    char ch;
+		while (1) {
+        ch = getch(); // Read a character without echoing to the screen
+
+        if (ch == 13) { // Enter key pressed
+            user_password[i] = '\0'; // Null-terminate the password string
+            break;
+        } else if (ch == 8 && i > 0) { // Backspace key pressed
+            i--;
+            printf("\b \b"); // Erase the character from the screen
+        } else {
+            user_password[i] = ch;
+            i++;
+            printf("*"); // Print an asterisk (*) to indicate a character was typed
+        }
+    }
 		fp = fopen(strcat(account,".csv"),"r");
 		if(fp == NULL) printf("Account number not registered");
 
 		else {
 			fread(&user,sizeof(struct user),1,fp);
 			fclose(fp);
-			if(!strcmp(password,user.password)){
+			if(!strcmp(user_password,user.password)){
 				while(cont == 'y'){
 				printf("\n\tWelcome %s",user.ac);
 				printf("\n 1. Balance inquiry");
