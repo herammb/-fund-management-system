@@ -2,7 +2,30 @@
 #include<string.h>
 #include<stdlib.h>
 #include <conio.h>
+#include<ctype.h>
 
+void encode(char text[50]) {
+
+
+    for (int i = 0; text[i] != '\0'; i++)
+        {
+            if (isalpha(text[i]))
+            {
+                if (isupper(text[i]))
+                {
+                    text[i] = ((text[i] - 'A') + 13) % 26 + 'A';
+                    }
+                     else if (islower(text[i]))
+                        {
+                            text[i] = ((text[i] - 'a') + 13) % 26 + 'a';
+                        }
+            }
+        }
+
+
+
+
+}
 
 struct user {
 	char ac[50];
@@ -33,18 +56,19 @@ int main(){
 		   while (1) {
         ch = getch();
 
-        if (ch == 13) { 
-            user.password[i] = '\0'; 
+        if (ch == 13) {
+            user.password[i] = '\0';
             break;
         } else if (ch == 8 && i > 0) {
             i--;
-            printf("\b \b"); 
+            printf("\b \b");
         } else {
             user.password[i] = ch;
             i++;
-            printf("*"); 
+            printf("*");
         }
     }
+        encode(user.password);
 		user.balance=0;
 		strcpy(filename,user.ac);
 		fp=fopen(strcat(filename,".csv"),"w");
@@ -67,18 +91,19 @@ int main(){
 		while (1) {
         ch = getch();
 
-        if (ch == 13) { 
-            user_password[i] = '\0'; 
+        if (ch == 13) {
+            user_password[i] = '\0';
             break;
-        } else if (ch == 8 && i > 0) { 
+        } else if (ch == 8 && i > 0) {
             i--;
-            printf("\b \b"); 
+            printf("\b \b");
         } else {
             user_password[i] = ch;
             i++;
-            printf("*"); 
+            printf("*");
         }
     }
+       // encode(user.password);
 		fp = fopen(strcat(account,".csv"),"r");
 		if(fp == NULL) printf("Account number not registered");
 
